@@ -1,18 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System;
+//using Microsoft.Xna.Framework.Audio;
+//using Microsoft.Xna.Framework.Media;
 namespace Tdjgame
 {
     enum Direction
     {
         Right,
         Left,
-        Up,
+        Hurt,
         Stop,
         StopLeft,
         attack,
-
     }
 
 
@@ -21,46 +22,51 @@ namespace Tdjgame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public bool dead = false;
-        //KeyboardState keyState = Keyboard.GetState(); 
+        //KeyboardState keyState = Keyboard.GetState();
+        MouseState mState;
+        bool mReleased = true;
+        bool gameStart = false;
+        int warewolfLife = 30;
+        Random rand = new Random();
 
-        //player
-        
-        Texture2D hurt;
-        Texture2D idle;
-        Texture2D jump;
-        Texture2D lightattack;
-        Texture2D run;
-        Texture2D runLeft;
-        Texture2D idleLeft;
 
-       
+
+
         Player2 player2 = new Player2();
+        Wolf wolf = new Wolf(new Vector2(500, 500));
+        Portal portal = new Portal();
+        Menu menu = new Menu();
+        LevelManager levelManager = new LevelManager();
 
-        //wolf
-        Texture2D wolfIdle;
-        Texture2D wolfIdleLeft;
-        Texture2D wolfRun;
-        Texture2D wolfRunLeft;
-        Texture2D wolfAttack;
-        Texture2D wolfAttackLeft;
-        Texture2D wolfDeath;
-        Texture2D wolfDeathLeft;
+
 
         //Warewolf
 
         Warewolf warewolf = new Warewolf();
-        Texture2D warewolfAttack;
-        Texture2D warewolfAttackL;
-        Texture2D warewolfDeath;
-        Texture2D warewolfDeathL;
-        Texture2D warewolfRun;
-        Texture2D warewolfRunLeft;
-        Texture2D warewolfShooting;
+        
 
         //Background
-
         Backgroud backGround = new Backgroud();
         Backgroud backGround2 = new Backgroud();
+        Backgroud backGround3 = new Backgroud();
+        Backgroud backGround4 = new Backgroud();
+        Backgroud backGround5 = new Backgroud();
+        Backgroud backGround6 = new Backgroud();
+        Backgroud backGroundStart = new Backgroud();
+
+      
+
+        //Game
+
+        SpriteFont gameFont; //fonte da letra
+        Texture2D wolfIcon;
+
+
+        //Portal
+        Texture2D portal1;
+
+        public double timer = 30;
+
 
         //Texture2D newBackGround;
 
@@ -84,71 +90,32 @@ namespace Tdjgame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
+
+            gameFont = Content.Load<SpriteFont>("Game/gameFont");
+            wolfIcon = Content.Load<Texture2D>("Game/wolfIcon");
+
             //player
-            
-            hurt = Content.Load<Texture2D>("Player/hurt");
-            idle = Content.Load<Texture2D>("Player/idle");
-            idleLeft = Content.Load<Texture2D>("Player/idleLeft");
-            jump = Content.Load<Texture2D>("Player/jump");
-            lightattack = Content.Load<Texture2D>("Player/lightattack");
-            run = Content.Load<Texture2D>("Player/run");
-            runLeft = Content.Load<Texture2D>("Player/runLeft");
-
-            //player.animations[0] = new SpriteAnimation(idle, 18, 20);
-
-            ////player.anim = player.animations[0];
-            //player.playerAnimation = player.animations[0];
-
-            player2.animations[0] = new SpriteAnimation(run, 24, 26);
-            player2.animations[1] = new SpriteAnimation(runLeft, 24, 26);
-            player2.animations[2] = new SpriteAnimation(jump, 19, 20);
-            player2.animations[3] = new SpriteAnimation(idle, 18, 20);
-            player2.animations[4] = new SpriteAnimation(idleLeft, 18, 20);
-
-            player2.animations[5] = new SpriteAnimation(lightattack, 26, 30);
 
 
-            //player2.animation = player2.animations[0];//podiamos igualar a quaçquer sprite , tinhamos de atribuir valor à animcao do jogador
-            //wolf
-            wolfIdle = Content.Load<Texture2D>("Wolf/idle");
-            wolfIdleLeft = Content.Load<Texture2D>("Wolf/idleLeft");
-            wolfRun = Content.Load<Texture2D>("Wolf/runLoop");
-            wolfRunLeft = Content.Load<Texture2D>("Wolf/attackLeft2");
-            wolfAttack = Content.Load<Texture2D>("Wolf/attack");
-            // wolfAttackLeft = Content.Load<Texture2D>("Wolf/idle");
-            wolfDeath = Content.Load<Texture2D>("Wolf/death");
-            // wolfDdeathLeft = Content.Load<Texture2D>("Wolf/idle");
-
-            Wolf.wolves.Add(new Wolf(new Vector2(200, 500), wolfIdle));
-            Wolf.wolves[0].wolfAnimations[0] = new SpriteAnimation(wolfIdle, 6, 10);
-            Wolf.wolves[0].wolfAnimations[1] = new SpriteAnimation(wolfIdleLeft, 6, 10);
-            Wolf.wolves[0].wolfAnimations[2] = new SpriteAnimation(wolfRun, 8, 11);
-            Wolf.wolves[0].wolfAnimations[3] = new SpriteAnimation(wolfRunLeft, 14, 16);
-            Wolf.wolves[0].wolfAnimations[4] = new SpriteAnimation(wolfAttack, 22, 25);
-            //Wolf.wolves[0].wolfAnimations[5] = new SpriteAnimation(wolfAttackLeft,22, 25);
-            //Wolf.wolves[0].wolfAnimations[6] = new SpriteAnimation(wolfDeath, 6, 10);
-            //Wolf.wolves[0].wolfAnimations[7] = new SpriteAnimation(wolfDeathLeft, 6, 10);
+            player2.loadPlayer(this);
+            wolf.wolfLoad(this);
+            menu.LoadMenu(this);
 
 
-            warewolfAttack = Content.Load<Texture2D>("Warewolf/attack");
-            warewolfAttackL = Content.Load<Texture2D>("Warewolf/attackLeft");
-            warewolfDeath = Content.Load<Texture2D>("Warewolf/death");
-            warewolfDeathL = Content.Load<Texture2D>("Warewolf/deathLeft");
-            warewolfRun = Content.Load<Texture2D>("Warewolf/run");
-            warewolfRunLeft = Content.Load<Texture2D>("Warewolf/runLeft");
-            warewolfShooting = Content.Load<Texture2D>("Warewolf/shooting");
 
-            warewolf.animations[0] = new SpriteAnimation(warewolfAttack, 7, 10);
-            warewolf.animations[1] = new SpriteAnimation(warewolfAttackL, 7, 10);
-            warewolf.animations[2] = new SpriteAnimation(warewolfDeath, 8, 11);
-            warewolf.animations[3] = new SpriteAnimation(warewolfDeathL, 8, 11);
-            warewolf.animations[4] = new SpriteAnimation(warewolfRun, 10, 20);
-            warewolf.animations[5] = new SpriteAnimation(warewolfRunLeft, 10, 14);
-            warewolf.animations[6] = new SpriteAnimation(warewolfShooting, 7, 9);
+            //Portal
+            portal1 = Content.Load<Texture2D>("Portal/portal3_spritesheet");
+            portal.portalAnimation = new SpriteAnimation(portal1, 7, 10);
+           
 
             //BackGround
             backGround.Scrolling(Content.Load<Texture2D>("BackGround/Background"), new Rectangle(0, 0, 928, 793));
             backGround2.Scrolling(Content.Load<Texture2D>("BackGround/Background"), new Rectangle(928, 0, 928, 793));
+
+            //Song
+           //MySounds.bgSong = Content.Load<Song>("Sounds/nature");
+           //MediaPlayer.Play(MySounds.bgSong);
         }
 
         protected override void Update(GameTime gameTime)
@@ -156,45 +123,153 @@ namespace Tdjgame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //player.Update(gameTime);
+
             player2.Update(gameTime);
+            mState = Mouse.GetState();
 
-
-            foreach (Wolf wolf in Wolf.wolves)
+            if (levelManager.level == 1)
             {
-                wolf.Update(gameTime, player2.Position,player2.dead);
-
-                
-                if (Vector2.Distance(player2.Position, wolf.Position) < 20)
+                if (levelManager.loaded2 == false)
                 {
-                    player2.dead = true;
+                    backGround.Scrolling(Content.Load<Texture2D>("BackGround/Background"), new Rectangle(0, 0, 928, 793));
+                    backGround2.Scrolling(Content.Load<Texture2D>("BackGround/Background"), new Rectangle(928, 0, 928, 793));
+                    levelManager.loaded2 = true;
+                }
+                backGround.CreateBackGround(player2, backGround, backGround2);
+            }
+
+            if (Wolf.wolves.Count == 0 || player2.lives == 0)
+            {
+                portal.position.X = 600;
+                portal.position.Y = 695;
+                levelManager.Level1Unload(player2.lives, portal.position, player2.Position, this);
+            }
+
+            if (levelManager.level == 2 && timer > 0 && levelManager.loaded == false)
+            {
+                portal1 = Content.Load<Texture2D>("Portal/portal3_spritesheet");
+                portal.portalAnimation = new SpriteAnimation(portal1, 7, 10);
+                portal.position.X = 0;
+                portal.position.Y = 500;
+                levelManager.Level2Load(this, player2);
+                backGround3.Scrolling(Content.Load<Texture2D>("BackGround/background2"), new Rectangle(0, 0, 928, 793));
+                backGround4.Scrolling(Content.Load<Texture2D>("BackGround/background2"), new Rectangle(928, 0, 928, 793));
+                levelManager.loaded = true;
+            }
+
+            if (levelManager.level == 2)
+            {
+                backGround.CreateBackGround(player2, backGround3, backGround4);
+                timer -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (Wolf.wolves.Count == 0 || player2.lives == 0)
+                {
+                    portal.position.X = 600;
+                    portal.position.Y = 700;
+      
+                }
+                levelManager.Level2Unload(this, player2 , portal.position , player2.Position);
+
+            }
+
+            if (levelManager.level == 3 && levelManager.loaded3 == false)
+            {
+                portal1 = Content.Load<Texture2D>("Portal/portal3_spritesheet");
+                portal.portalAnimation = new SpriteAnimation(portal1, 7, 10);
+                portal.position.X = 0;
+                portal.position.Y = 500;
+                levelManager.Level3Load(this, player2);
+                warewolf.LoadWarewolf(this);
+                backGround5.Scrolling(Content.Load<Texture2D>("BackGround/Background3"), new Rectangle(0, 0, 928, 793));
+                backGround6.Scrolling(Content.Load<Texture2D>("BackGround/Background3"), new Rectangle(928, 0, 928, 793));
+                levelManager.loaded3 = true;
+            }
+
+           
+            if (levelManager.level == 3)
+            {
+                backGround.CreateBackGround(player2, backGround5, backGround6);
+                if (Wolf.wolves.Count == 0 || player2.lives == 0)
+                {
+                    portal.position.X = 600;
+                    portal.position.Y = 700;
+                }
+                //levelManager.Level2Unload(this, player2, portal.position, player2.Position);
+            }
+
+
+            for (int i = 0; i < Wolf.wolves.Count; i++)
+            {
+                Wolf.wolves[i].Update(gameTime, player2.Position, player2.lives);
+
+
+                if (Vector2.Distance(player2.Position, Wolf.wolves[i].Position) < 20) // se colidir com o lobo leva dano
+                {
+                    player2.lives--;
+                    if (player2.kStateOld.IsKeyDown(Keys.D))
+                    {
+                        player2.animation = player2.animations[2];
+                        player2.setX(player2.Position.X - 80f);
+                    }
+                    else if (player2.kStateOld.IsKeyDown(Keys.A))
+                    {
+                        player2.setX(player2.Position.X + 80f);
+                    }
+                    else
+                    {
+                        player2.setX(player2.Position.X + 80f);
+                    }
 
                 }
 
+                if (Vector2.Distance(player2.Position, Wolf.wolves[i].Position) < 25 && player2.kStateOld.IsKeyDown(Keys.Enter) && player2.lives != 0)
+                {
+
+
+                    Wolf.wolves.Remove(Wolf.wolves[i]);
+
+                }
+
+
+
+
             }
 
-            warewolf.Update(gameTime, player2.Position);
-
-           
-            
-            if (backGround.rectangle.X + backGround.texture.Width <= 0)
+            if (levelManager.level == 3)
             {
-                backGround.rectangle.X = backGround2.rectangle.X + backGround2.texture.Width;
+                if (Vector2.Distance(player2.Position, warewolf.Position) < 15) // se colidir com o lobisomem leva dano
+                {
+                    player2.lives--;
+                    if (player2.kStateOld.IsKeyDown(Keys.D))
+                    {
+                        player2.animation = player2.animations[2];
+                        player2.setX(player2.Position.X - 80f);
+                    }
+                    else if (player2.kStateOld.IsKeyDown(Keys.A))
+                    {
+                        player2.setX(player2.Position.X + 80f);
+                    }
+                    else
+                    {
+                        player2.setX(player2.Position.X + 80f);
+                    }
+
+                }
+
+                if (Vector2.Distance(player2.Position, warewolf.Position) < 25 && player2.kStateOld.IsKeyDown(Keys.Enter) && player2.lives != 0)
+                {
+                    if(warewolfLife > 0)
+                    {
+                        warewolfLife -= rand.Next(5, 15);
+                    }
+                    
+
+
+                }
             }
 
-            if (backGround2.rectangle.X + backGround2.texture.Width <= 0)
-            {
-                backGround2.rectangle.X = backGround.rectangle.X + backGround.texture.Width;
-            }
-
-            
-            if (player2.Position.X > 464 && player2.kState.IsKeyDown(Keys.Right))
-            {
-                backGround.Update(3);
-                backGround2.Update(3);
-            }
-
+            portal.Update(gameTime);
             base.Update(gameTime);
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -203,34 +278,80 @@ namespace Tdjgame
 
             _spriteBatch.Begin();
 
-            backGround.Draw(_spriteBatch);
-            backGround2.Draw(_spriteBatch);
+            if (levelManager.level == 1)
+            {
+                backGround.Draw(_spriteBatch);
+                backGround2.Draw(_spriteBatch);
+                _spriteBatch.DrawString(gameFont, "Wolf : " + (Wolf.wolves.Count).ToString(), new Vector2(0, 0), Color.White);
+                _spriteBatch.DrawString(gameFont, "Lives : " + player2.lives.ToString(), new Vector2(0, 50), Color.White);
+                if (Wolf.wolves.Count == 0)
+                {
+                    portal.portalAnimation.Draw(_spriteBatch);
+                }
+            }
 
+            if (levelManager.level == 2)
+            {
+                backGround3.Draw(_spriteBatch);
+                backGround4.Draw(_spriteBatch);
+                _spriteBatch.DrawString(levelManager.gameFont, "Wolf : " + (Wolf.wolves.Count).ToString(), new Vector2(0, 0), Color.White); 
+                _spriteBatch.DrawString(levelManager.gameFont, "Timer : " + Math.Floor(timer).ToString(), new Vector2(0, 50), Color.White);
+                if (Wolf.wolves.Count == 0)
+                {
+                    portal.portalAnimation.Draw(_spriteBatch);
+                }
+            }
 
-
+            if (levelManager.level == 3)
+            {
+                backGround5.Draw(_spriteBatch);
+                backGround6.Draw(_spriteBatch);
+                _spriteBatch.DrawString(levelManager.gameFont, "Life: " + player2.lives, new Vector2(0, 0), Color.White);
+                _spriteBatch.DrawString(levelManager.gameFont, "Warewolf : " + warewolfLife, new Vector2(0, 50), Color.White);
+                warewolf.Update(gameTime, player2.Position);
+                if(warewolfLife > 0)
+                {
+                    warewolf.animation.Draw(_spriteBatch);
+                }
+                
+            }
 
             foreach (Wolf wolf in Wolf.wolves)
             {
                 wolf.wolfAnimation.Draw(_spriteBatch);
+                
             }
 
-            if (!player2.dead)
-            {   
-                
+            if (player2.lives > 0)
+            {
                 player2.animation.Draw(_spriteBatch);
             }
-            
 
-            warewolf.animation.Draw(_spriteBatch);
+            //_spriteBatch.Draw(warewolfIdle, new Vector2(500, 500), Color.White);
+            //warewolf.animation.Draw(_spriteBatch);
 
+            if (player2.lives == 0 || timer <= 0)
+            {
+                menu.LoadMenu(this);
+                _spriteBatch.Draw(menu.start, new Vector2(164, 96), Color.White);
+                _spriteBatch.Draw(menu.controls, new Vector2(164, 300), Color.White);
+                _spriteBatch.Draw(menu.quit, new Vector2(164, 504), Color.White);
+            }
+
+            if(warewolfLife < 0)
+            {
+                _spriteBatch.DrawString(gameFont, "Jogo Completado", new Vector2(928/2, 793/2), Color.White);
+
+
+            }
 
 
             _spriteBatch.End();
 
 
             base.Draw(gameTime);
+            }
         }
-    }
 }
 
 

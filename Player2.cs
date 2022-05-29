@@ -4,32 +4,41 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+//using Microsoft.Xna.Framework.Audio;
+//using Microsoft.Xna.Framework.Media;
 namespace Tdjgame
 {
     class Player2
     {
-        private Vector2 position = new Vector2(500, 0); //private values só podem ser acedidos dentro da classe , temos de usar accessors 
-        private int speed = 300;
+        private Vector2 position = new Vector2(0,665); //private values só podem ser acedidos dentro da classe , temos de usar accessors 
+        private int speed = 150;
         private Direction direction;
         private bool isMoving = false;
         private int directionVerify;
-        public bool dead = false;
+        public int lives = 3;
 
 
         private bool jumping = false; //Is the character jumping?
-        private float jumpspeed = 0, startY = 500;
+        private float jumpspeed = 0, startY = 665;
 
 
         public SpriteAnimation animation;
         public SpriteAnimation[] animations = new SpriteAnimation[6];
 
-        private KeyboardState kStateOld = Keyboard.GetState();
-        public KeyboardState kState = Keyboard.GetState();
-
-        private int attackTime = 10;
+        public KeyboardState kStateOld = Keyboard.GetState();
+      
+        private double attackTime = 10;
         private bool attack = false;
 
+        //player
+
+        Texture2D hurt;
+        Texture2D idle;
+        Texture2D jump;
+        Texture2D lightattack;
+        Texture2D run;
+        Texture2D runLeft;
+        Texture2D idleLeft;
 
 
         public Vector2 Position //fazer um setter para um Vector2 é um bocado mais complexo , no exemplo usamos int
@@ -60,14 +69,14 @@ namespace Tdjgame
             isMoving = false;
 
 
-            if (kState.IsKeyDown(Keys.Right))
+            if (kState.IsKeyDown(Keys.D))
             {
                 direction = Direction.Right;
                 directionVerify = 0;
                 isMoving = true;
             }
 
-            if (kState.IsKeyDown(Keys.Left))
+            if (kState.IsKeyDown(Keys.A))
             {
                 direction = Direction.Left;
                 directionVerify = 1;
@@ -75,20 +84,20 @@ namespace Tdjgame
             }
 
 
-            if (kState.IsKeyDown(Keys.Up))
+
+            if (kState.IsKeyDown(Keys.Enter))
             {
-                direction = Direction.Up;
-                isMoving = true;
+                //MySounds.swordsound.Play();
+                for(int i =0; i<20; i++)
+                {
+                    direction = Direction.attack;
+                    isMoving = true;
 
+                }
+               
 
-            }
-
-            if (kState.IsKeyDown(Keys.Space))
-            {
-                direction = Direction.attack;
-                isMoving = true;
-                attack = true;
-
+                
+             
             }
 
                 if (jumping)
@@ -113,78 +122,116 @@ namespace Tdjgame
                     }
                 }
 
-                if (dead) //impedir o movimento do jogador se este morrer
+                if (lives == 0) //impedir o movimento do jogador se este morrer
                 {
                     isMoving = false;
                 }
 
-                if (isMoving)
+            if (isMoving)
+            {
+                switch (direction)
                 {
-                    switch (direction)
-                    {
-                        case Direction.Right:
+                    case Direction.Right:
 
+                        if(position.X < 880) //impede que passe o ecrã à direita
+                        {
                             position.X += speed * dt;
-                            break;
+                            
 
+                        }
 
-                        case Direction.Left:
+                        break;
 
+                    case Direction.Left:
+                        
+                        if (position.X > -40)
+                        {
                             position.X -= speed * dt;
-                            break;
+                            
+                        }
+                        break;
+
+                    case Direction.attack:
+                         
+                        
 
 
-                        case Direction.Up:
+                        
 
-
-
-                            //position.Y -= speed * dt;
+                        //position.Y -= speed * dt;
 
 
 
 
-                            break;
-
-                    }
+                        break;
 
                 }
 
-                else
+            }
+            else
+            {
+
+                if (kState.IsKeyUp(Keys.Right) && directionVerify == 0)
                 {
-
-                    if (kState.IsKeyUp(Keys.Right) && directionVerify == 0)
-                    {
-                        direction = Direction.Stop;
-                    }
-                    if (kState.IsKeyUp(Keys.Left) && directionVerify == 1)
-                    {
-                        direction = Direction.StopLeft;
-                    }
-
+                    direction = Direction.Stop;
+                }
+                if (kState.IsKeyUp(Keys.Left) && directionVerify == 1)
+                {
+                    direction = Direction.StopLeft;
                 }
 
-                animation = animations[(int)direction];
-                animation.Position = position;//a posicao da animacao nao estava centrada com a do jogador , por isso se faz isto
-                animation.Update(gameTime);
-
-
-
             }
+                
+               
+             
+            animation = animations[(int)direction];
+            animation.Position = position;//a posicao da animacao nao estava centrada com a do jogador , por isso se faz isto
+            animation.Update(gameTime);
 
-           
-            }
+               
+                kStateOld = kState;
+
+        }
 
 
+        public void loadPlayer(Game1 game)
+        {
+            hurt = game.Content.Load<Texture2D>("Player/hurt");
+            idle = game.Content.Load<Texture2D>("Player/idle");
+            idleLeft = game.Content.Load<Texture2D>("Player/idleLeft");
+            lightattack = game.Content.Load<Texture2D>("Player/lightattack");
+            run = game.Content.Load<Texture2D>("Player/run");
+            runLeft = game.Content.Load<Texture2D>("Player/runLeft");
 
-
-
-
-
-
-
+            animations[0] = new SpriteAnimation(run, 24, 26);
+            animations[1] = new SpriteAnimation(runLeft, 24, 26);
+            animations[2] = new SpriteAnimation(hurt, 7, 10);
+            animations[3] = new SpriteAnimation(idle, 18, 20);
+            animations[4] = new SpriteAnimation(idleLeft, 18, 20);
+            animations[5] = new SpriteAnimation(lightattack, 26, 30);
 
 
         }
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+}
 
 
 
