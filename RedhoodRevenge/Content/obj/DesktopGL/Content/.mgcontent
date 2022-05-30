@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Background/Background.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Background/background2.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Background/Background3.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Game/gameFont.spritefont</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Game/wolfIcon.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Menu/Controls Button.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Menu/Quit Button.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Menu/Resume Button.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Menu/Start Button.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/character.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/hurt.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/idle.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/idleLeft.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/jump.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/lightattack.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/run.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/runLeft.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Player/turnaround.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Portal/portal3_spritesheet.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Sounds/nature.ogg</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Warewolf/attack.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Warewolf/attackLeft.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Warewolf/run.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Warewolf/runLeft.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Wolf/attack.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Wolf/attack1.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Wolf/attackLeft.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Wolf/idle.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Wolf/idleLeft.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Wolf/runLoop.png</File>
+    <File>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Wolf/runLoopLeft.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

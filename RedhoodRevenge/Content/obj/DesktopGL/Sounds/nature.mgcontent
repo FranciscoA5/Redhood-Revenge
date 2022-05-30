@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/Sounds/nature.ogg</SourceFile>
+  <SourceTime>2022-05-29T19:58:13.6733829+01:00</SourceTime>
+  <DestFile>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/bin/DesktopGL/Sounds/nature.xnb</DestFile>
+  <DestTime>2022-05-30T15:19:55.6969691+01:00</DestTime>
+  <Importer>OggImporter</Importer>
+  <ImporterTime>2020-08-10T17:17:54+01:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2020-08-10T17:17:54+01:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>C:/Users/FranciscoAndrade/Desktop/TDJ/Tdjgame/Content/bin/DesktopGL/Sounds/nature.ogg</string>
+  </BuildOutput>
+</PipelineBuildEvent>
